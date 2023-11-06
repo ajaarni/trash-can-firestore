@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { collection, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { db } from "./firebase";
 
 function App() {
+  const [inventorys, setInventory] = useState([]);
+  const inventoryRef = collection(db, "inventory");
+
+  useEffect(() => {
+    const getInventory = async () => {
+      const items = await getDocs(inventoryRef);
+      setInventory(items.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getInventory();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {inventorys.map((inventory) => {
+        return (
+          <div>
+            <h1> Item: {inventory.itemname}</h1>
+            <h2> Make: {inventory.manufacturer}</h2>
+            <h3> Quantity: {inventory.quantity}</h3>
+          </div>
+        );
+      })}
     </div>
   );
 }
