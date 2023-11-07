@@ -29,7 +29,7 @@ function Home() {
     });
     setNewItemName("")
     setNewMaker("");
-    setQuantity();
+    setQuantity(0);
   };
 
   const updateItem = async (id, quantity) => {
