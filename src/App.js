@@ -1,68 +1,16 @@
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { db } from "./firebase";
+import {Routes, Route} from "react-router-dom"
+import Home from "./Pages/Home"
+import Edit from "./Pages/Edit"
 
 function App() {
-  const [newItemName, setNewItemName] = useState("");
-  const [newMaker, setNewMaker] = useState("");
-  const [newQuantity, setQuantity] = useState(0);
-
-  const [inventory, setInventory] = useState([]);
-  const inventoryRef = collection(db, "inventory");
-
-  const createItem = async () => {
-    await addDoc(inventoryRef, {
-      itemname: newItemName,
-      manufacturer: newMaker,
-      quantity: newQuantity,
-    });
-  };
-
-  useEffect(() => {
-    const getInventory = async () => {
-      const items = await getDocs(inventoryRef);
-      setInventory(items.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getInventory();
-  }, []);
-
-  return (
-    <div className="App">
-      <input
-        placeholder="Item Name"
-        onChange={(e) => {
-          setNewItemName(e.target.value);
-        }}
-      />
-      <input
-        placeholder="Manufacturer"
-        onChange={(e) => {
-          setNewMaker(e.target.value);
-        }}
-      />
-      <input
-        type="number"
-        placeholder="Quantity"
-        onChange={(e) => {
-          setQuantity(e.target.value);
-        }}
-      />
-
-      <button type="submit" onClick={createItem}>
-        Add Inventory
-      </button>
-
-      {inventory.map((inventory) => {
-        return (
-          <div>
-            <h1> Item: {inventory.itemname}</h1>
-            <h2> Make: {inventory.manufacturer}</h2>
-            <h3> Quantity: {inventory.quantity}</h3>
-          </div>
-        );
-      })}
-    </div>
+  return(
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/edit" element={<Edit/>}/>
+    </Routes>
   );
 }
 
