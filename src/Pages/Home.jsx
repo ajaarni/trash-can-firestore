@@ -35,6 +35,12 @@ function Home() {
     await updateDoc(itemDoc, newFeilds);
   };
 
+  const decrementItem = async (id, quantity) => {
+    const itemDoc = doc(db, "inventory", id);
+    const newFields = { quantity: quantity - 1 };
+    await updateDoc(itemDoc, newFields);
+  };
+
   const deleteItem = async (id) => {
     const itemDoc = doc(db, "inventory", id);
     await deleteDoc(itemDoc)
@@ -88,6 +94,14 @@ function Home() {
             >
               {" "}
               Increase Item Quantity
+            </button>
+            <button
+              onClick={() => {
+                decrementItem(inventory.id, inventory.quantity);
+              }}
+            >
+              {" "}
+              Decrease Item Quantity
             </button>
             <button
               onClick={() => {
