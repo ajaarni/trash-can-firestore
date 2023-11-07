@@ -1,6 +1,3 @@
-import { collection, getDocs, addDoc } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import { db } from "./firebase";
 import {Routes, Route} from "react-router-dom"
 import Home from "./Pages/Home"
 import Edit from "./Pages/Edit"
