@@ -27,22 +27,17 @@ function Home() {
       manufacturer: newMaker,
       quantity: Number(newQuantity),
     });
-    window.location.reload(false);
   };
 
   const updateItem = async (id, quantity) => {
     const itemDoc = doc(db, "inventory", id);
     const newFeilds = { quantity: quantity + 1 };
     await updateDoc(itemDoc, newFeilds);
-    window.location.reload(false);
   };
 
   const deleteItem = async (id) => {
     const itemDoc = doc(db, "inventory", id);
     await deleteDoc(itemDoc)
-
-    window.location.reload(false);
-
   };
 
   useEffect(() => {
