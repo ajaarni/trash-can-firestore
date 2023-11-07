@@ -27,6 +27,9 @@ function Home() {
       manufacturer: newMaker,
       quantity: Number(newQuantity),
     });
+    setNewItemName("")
+    setNewMaker("");
+    setQuantity();
   };
 
   const updateItem = async (id, quantity) => {
@@ -59,12 +62,14 @@ function Home() {
     <div className="App">
       <input
         placeholder="Item Name"
+        value = {newItemName}
         onChange={(e) => {
           setNewItemName(e.target.value);
         }}
       />
       <input
         placeholder="Manufacturer"
+        value = {newMaker}
         onChange={(e) => {
           setNewMaker(e.target.value);
         }}
@@ -72,6 +77,7 @@ function Home() {
       <input
         type="number"
         placeholder="Quantity"
+        value = {newQuantity}
         onChange={(e) => {
           setQuantity(e.target.value);
         }}
