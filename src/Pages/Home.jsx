@@ -52,7 +52,7 @@ function Home() {
     };
 
     getInventory();
-  }, []);
+  }, [inventoryRef]);
 
   return (
     <div className="App">
