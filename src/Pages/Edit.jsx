@@ -35,18 +35,23 @@ function Edit() {
     <div>
       <h1>Edit Item</h1>
 
+      <h3> {data.itemname}</h3>
       <input
         onChange={(e) => {
           setNewItemName(e.target.value);
         }}
         placeholder={data.itemname}
       />
+
+      <h3> {data.manufacturer}</h3>
       <input
         onChange={(e) => {
           setNewMaker(e.target.value);
         }}
         placeholder={data.manufacturer}
       />
+
+      <h3> {data.quantity}</h3>
       <input
         onChange={(e) => {
           setNewQuantity(e.target.value);
@@ -55,7 +60,7 @@ function Edit() {
       />
 
       <button
-        // onClick={updateItem(docID.itemID, data.itemname, data.manufacturer, data.quantity)}
+      // onClick={updateItem(docID.itemID, data.itemname, data.manufacturer, data.quantity)}
       >
         Save
       </button>

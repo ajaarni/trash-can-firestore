@@ -31,6 +31,16 @@ function Home() {
     setNewItemName("");
     setNewMaker("");
     setQuantity(0);
+    Swal.fire({
+      position: "top-end",
+      title: "Inventory Added",
+      text:
+        "You have added " + newItemName + " to your inventor!",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+    });
   };
 
   const updateItem = async (id, quantity) => {
@@ -147,16 +157,19 @@ function Home() {
                   text: "You won't be able to revert this!",
                   icon: "warning",
                   showCancelButton: true,
-                  confirmButtonColor: "#3085d6",
                   cancelButtonColor: "#d33",
-                  confirmButtonText: "Yes, delete it!",
+                  confirmButtonText: "Confirm",
                 }).then((result) => {
                   if (result.isConfirmed) {
                     deleteItem(inventory.id);
                     Swal.fire({
                       title: "Deleted!",
-                      text: "Your file has been deleted.",
+                      text: inventory.itemname + " has been deleted.",
                       icon: "success",
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                      
                     });
                   }
                 });
