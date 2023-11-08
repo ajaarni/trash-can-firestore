@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Home() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function Home() {
       manufacturer: newMaker,
       quantity: Number(newQuantity),
     });
-    setNewItemName("")
+    setNewItemName("");
     setNewMaker("");
     setQuantity(0);
   };
@@ -46,7 +47,7 @@ function Home() {
 
   const deleteItem = async (id) => {
     const itemDoc = doc(db, "inventory", id);
-    await deleteDoc(itemDoc)
+    await deleteDoc(itemDoc);
   };
 
   useEffect(() => {
@@ -62,14 +63,14 @@ function Home() {
     <div className="App">
       <input
         placeholder="Item Name"
-        value = {newItemName}
+        value={newItemName}
         onChange={(e) => {
           setNewItemName(e.target.value);
         }}
       />
       <input
         placeholder="Manufacturer"
-        value = {newMaker}
+        value={newMaker}
         onChange={(e) => {
           setNewMaker(e.target.value);
         }}
@@ -77,7 +78,7 @@ function Home() {
       <input
         type="number"
         placeholder="Quantity"
-        value = {newQuantity}
+        value={newQuantity}
         onChange={(e) => {
           setQuantity(e.target.value);
         }}
@@ -96,14 +97,37 @@ function Home() {
             <button
               onClick={() => {
                 updateItem(inventory.id, inventory.quantity);
+                Swal.fire({
+                  position: "top-end",
+                  title: "Quantity Raised",
+                  text:
+                    "You have increased the quantity of " +
+                    inventory.itemname +
+                    " by 1 unit!",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                });
               }}
             >
-              {" "}
               Increase Item Quantity
             </button>
             <button
               onClick={() => {
                 decrementItem(inventory.id, inventory.quantity);
+                Swal.fire({
+                  position: "top-end",
+                  title: "Quantity Lowered",
+                  text:
+                    "You have lowered the quantity of " +
+                    inventory.itemname +
+                    " by 1 unit",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                });
               }}
             >
               {" "}
@@ -111,14 +135,31 @@ function Home() {
             </button>
             <button
               onClick={() => {
-                navigate("/edit/"+inventory.id);
+                navigate("/edit/" + inventory.id);
               }}
             >
               Edit Item
             </button>
             <button
               onClick={() => {
-                deleteItem(inventory.id);
+                Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    deleteItem(inventory.id);
+                    Swal.fire({
+                      title: "Deleted!",
+                      text: "Your file has been deleted.",
+                      icon: "success",
+                    });
+                  }
+                });
               }}
             >
               {" "}
