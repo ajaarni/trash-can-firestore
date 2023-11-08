@@ -105,7 +105,7 @@ function Home() {
             </button>
             <button
               onClick={() => {
-                navigate("/edit");
+                navigate("/edit/"+inventory.id);
               }}
             >
               Edit Item
