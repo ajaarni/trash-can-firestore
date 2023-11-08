@@ -1,14 +1,14 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 function Edit() {
   const navigate = useNavigate();
-  const docID = useParams();
-  const [data, setData] = useState([]);
-  const docRef = doc(db, "inventory", docID.itemID);
+  const { itemID } = useParams();
+  const [data, setData] = useState({});
+  const docRef = doc(db, "inventory", itemID);
+
   const [newItemName, setNewItemName] = useState("");
   const [newMaker, setNewMaker] = useState("");
   const [newQuantity, setNewQuantity] = useState(0);
@@ -19,59 +19,52 @@ function Edit() {
       setData(docSnap.data());
     };
     getData();
-  }, []);
+  }, [docRef]);
 
-  const updateItem = async (itemname, maker, quantity) => {
-    const itemDoc = doc(db, "inventory", docRef);
-    const newFeilds = {
+  const updateItem = async () => {
+    const itemDoc = doc(db, "inventory", itemID);
+    const newFields = {
       itemname: newItemName,
       manufacturer: newMaker,
       quantity: newQuantity,
     };
-    await updateDoc(itemDoc, newFeilds);
+    await updateDoc(itemDoc, newFields);
+    navigate("/");
   };
 
   return (
     <div>
       <h1>Edit Item</h1>
 
-      <h3> {data.itemname}</h3>
+      <h3>Item Name</h3>
       <input
+        value={newItemName || data.itemname}
         onChange={(e) => {
           setNewItemName(e.target.value);
         }}
         placeholder={data.itemname}
       />
 
-      <h3> {data.manufacturer}</h3>
+      <h3>Manufacturer</h3>
       <input
+        value={newMaker || data.manufacturer}
         onChange={(e) => {
           setNewMaker(e.target.value);
         }}
         placeholder={data.manufacturer}
       />
 
-      <h3> {data.quantity}</h3>
+      <h3>Quantity</h3>
       <input
+        value={newQuantity}
         onChange={(e) => {
           setNewQuantity(e.target.value);
         }}
-        placeholder={data.quantity}
       />
 
-      <button
-      // onClick={updateItem(docID.itemID, data.itemname, data.manufacturer, data.quantity)}
-      >
-        Save
-      </button>
+      <button onClick={updateItem}>Save</button>
 
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Back
-      </button>
+      <button onClick={() => navigate("/")}>Back</button>
     </div>
   );
 }
