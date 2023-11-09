@@ -76,7 +76,7 @@ function Edit() {
               updateItem();
               Swal.fire({
                 title: "Item Updated!",
-                text:  " has been deleted.",
+                text:  data.itemname + " has been Updated.",
                 icon: "success",
                 showConfirmButton: false,
                 timer: 1500,
