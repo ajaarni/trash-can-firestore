@@ -26,7 +26,7 @@ function Edit() {
     const newFields = {
       itemname: newItemName,
       manufacturer: newMaker,
-      quantity: newQuantity,
+      quantity: Number(newQuantity),
     };
     await updateDoc(itemDoc, newFields);
     navigate("/");
@@ -52,6 +52,7 @@ function Edit() {
 
       <h3>Quantity</h3>
       <input
+        type="number"
         onChange={(e) => {
           setNewQuantity(e.target.value);
         }}
