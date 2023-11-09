@@ -38,32 +38,26 @@ function Edit() {
 
       <h3>Item Name</h3>
       <input
-        value={newItemName || data.itemname}
         onChange={(e) => {
           setNewItemName(e.target.value);
         }}
-        placeholder={data.itemname}
       />
 
       <h3>Manufacturer</h3>
       <input
-        value={newMaker || data.manufacturer}
         onChange={(e) => {
           setNewMaker(e.target.value);
         }}
-        placeholder={data.manufacturer}
       />
 
       <h3>Quantity</h3>
       <input
-        value={newQuantity}
         onChange={(e) => {
           setNewQuantity(e.target.value);
         }}
       />
 
       <button onClick={updateItem}>Save</button>
-
       <button onClick={() => navigate("/")}>Back</button>
     </div>
   );
