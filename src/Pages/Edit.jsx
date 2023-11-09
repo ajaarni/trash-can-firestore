@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import Swal from "sweetalert2";
 
 function Edit() {
   const navigate = useNavigate();
@@ -36,29 +37,56 @@ function Edit() {
     <div>
       <h1>Edit Item</h1>
 
-      <h3>Item Name</h3>
+      <h3>{data.itemname}</h3>
       <input
+        placeholder="New Item Name"
         onChange={(e) => {
           setNewItemName(e.target.value);
         }}
       />
 
-      <h3>Manufacturer</h3>
+      <h3>{data.manufacturer}</h3>
       <input
+        placeholder="New Make"
         onChange={(e) => {
           setNewMaker(e.target.value);
         }}
       />
 
-      <h3>Quantity</h3>
+      <h3>{data.quantity}</h3>
       <input
         type="number"
+        placeholder="New Quantity"
         onChange={(e) => {
           setNewQuantity(e.target.value);
         }}
       />
 
-      <button onClick={updateItem}>Save</button>
+      <button 
+        onClick={() => {
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirm",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              updateItem();
+              Swal.fire({
+                title: "Item Updated!",
+                text:  " has been deleted.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                
+              });
+            }
+          });
+        }}
+      >Save</button>
       <button onClick={() => navigate("/")}>Back</button>
     </div>
   );
