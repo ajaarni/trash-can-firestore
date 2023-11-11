@@ -65,9 +65,9 @@ function Home() {
       const items = await getDocs(inventoryRef);
       setInventory(items.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-
+    // alert("Running getInventory()")
     getInventory();
-  }, [inventoryRef]);
+  }, [] );
 
   return (
     <div className="App">
